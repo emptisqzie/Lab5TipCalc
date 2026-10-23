@@ -98,7 +98,31 @@ fun TipScreen() {
                     Text("$percent%", fontSize = 16.sp)
                 }
             }
+
         }
+
+        val sumValue = sum.trim().replace(',', '.').toDoubleOrNull() ?: 0.0
+
+        val tipAmount = sumValue * tip / 100.0
+        val discountAmount = sumValue * discount / 100.0
+        val total = sumValue + tipAmount - discountAmount
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Сумма чаевых: %.2f".format(tipAmount),
+            fontSize = 18.sp
+        )
+
+        Text(
+            text = "Сумма скидки: %.2f".format(discountAmount),
+            fontSize = 18.sp
+        )
+
+        Text(
+            text = "Итого к оплате: %.2f".format(total),
+            fontSize = 20.sp
+        )
     }
 }
 
