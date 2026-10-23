@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.mutableFloatStateOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
 fun TipScreen() {
     var sum by remember { mutableStateOf("") }
     var dishes by remember { mutableStateOf("") }
+    var tip by remember { mutableFloatStateOf(0f) }
 
     Column(
         modifier = Modifier
@@ -51,6 +53,20 @@ fun TipScreen() {
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        Text("Чаевые:", fontSize = 18.sp)
+
+        Slider(
+            value = tip,
+            onValueChange = { tip = it },
+            valueRange = 0f..25f,
+            steps = 24,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Text("Размер чаевых: ${tip.toInt()}%")
     }
 }
 
