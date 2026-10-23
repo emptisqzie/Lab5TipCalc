@@ -101,7 +101,12 @@ fun TipScreen() {
 
         }
 
-        val sumValue = sum.trim().replace(',', '.').toDoubleOrNull() ?: 0.0
+        val sumValue = sum
+            .trim()
+            .replace(',', '.')
+            .toDoubleOrNull()
+            ?.takeIf { it >= 0.0 && it.isFinite() }
+            ?: 0.0
 
         val tipAmount = sumValue * tip / 100.0
         val discountAmount = sumValue * discount / 100.0
