@@ -29,6 +29,16 @@ fun TipScreen() {
     var dishes by remember { mutableStateOf("") }
     var tip by remember { mutableFloatStateOf(0f) }
 
+    val dishesCount = dishes.toIntOrNull() ?: 0
+
+    val discount = when {
+        dishesCount in 1..2 -> 3
+        dishesCount in 3..5 -> 5
+        dishesCount in 6..10 -> 7
+        dishesCount > 10 -> 10
+        else -> 3
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -67,6 +77,28 @@ fun TipScreen() {
         )
 
         Text("Размер чаевых: ${tip.toInt()}%")
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        Text("Скидка:", fontSize = 24.sp)
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            listOf(3, 5, 7, 10).forEach { percent ->
+                Row(
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = discount == percent,
+                        onClick = null,
+                        enabled = false
+                    )
+                    Text("$percent%", fontSize = 16.sp)
+                }
+            }
+        }
     }
 }
 
